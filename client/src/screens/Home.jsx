@@ -1,5 +1,6 @@
 import { Dashboard } from "@/components/custom-component/Dashboard";
 import { useContext, useEffect } from "react";
+import { SetupInventory } from "@/components/custom-component/setupInventory";
 import { IconContext } from "react-icons";
 import { IoIosAdd } from "react-icons/io";
 import { IoIosSettings } from "react-icons/io";
@@ -70,16 +71,17 @@ export function Home() {
             <Dashboard screenTitle="Home">
                 <div className="flex flex-col w-full">
                     <div className="flex flex-row justify-around w-full  ">
-                        <div className="h-[200px] mt-3">
+                        <div className="h-[200px] mt-3  ">
                             <Component goodsTitle="Total Goods" className=""></Component>
                         </div>
-                        <div className="h-[200px] mt-3">
+                        <div className="h-[200px] mt-3 ">
                             <Component goodsTitle="Required Goods" className=""></Component>
                         </div>
-                        <div className="h-[200px] mt-3">
+                        <div className="h-[200px] mt-3 ">
                             <Card className="flex items-center justify-evenly h-full">
                                 <CardHeader>
-                                    <CardTitle>Setup Inventory</CardTitle>
+                                    {/* <CardTitle>Setup Inventory</CardTitle> */}
+                                    <SetupInventory></SetupInventory>
                                     {/* <CardDescription>Card Description</CardDescription> */}
                                 </CardHeader>
                                 <CardContent className="px-4 py-0  flex items-center justify-center">
@@ -87,6 +89,19 @@ export function Home() {
                                 </CardContent>
                             </Card>
                         </div>
+                        <div className="h-[200px] mt-3 ">
+                            <Card className="flex items-center justify-evenly h-full">
+                                <CardHeader>
+                                    {/* <CardTitle>Setup Inventory</CardTitle> */}
+                                    <SetupInventory></SetupInventory>
+                                    {/* <CardDescription>Card Description</CardDescription> */}
+                                </CardHeader>
+                                <CardContent className="px-4 py-0  flex items-center justify-center">
+                                    <MdInventory size={70} />
+                                </CardContent>
+                            </Card>
+                        </div>
+
                     </div>
                     <div className="px-10 mt-4 h-[350px] overflow-y-auto scrollBar">
                         <Table>
