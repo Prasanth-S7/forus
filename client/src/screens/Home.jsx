@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/table"
 import { Component } from "@/components/custom-component/pieChart";
 import { Card, CardContent, CardHeader, CardDescription, CardFooter, CardTitle } from "@/components/ui/card";
+import { SetupGoods } from "@/components/custom-component/setUpGoods";
 const goods = [
     {
         ItemId: "1",
@@ -70,7 +71,7 @@ export function Home() {
         <div>
             <Dashboard screenTitle="Home">
                 <div className="flex flex-col w-full">
-                    <div className="flex flex-row justify-around w-full  ">
+                    <div className="flex flex-row justify-around w-full ">
                         <div className="h-[200px] mt-3  ">
                             <Component goodsTitle="Total Goods" className=""></Component>
                         </div>
@@ -81,7 +82,7 @@ export function Home() {
                             <Card className="flex items-center justify-evenly h-full">
                                 <CardHeader>
                                     {/* <CardTitle>Setup Inventory</CardTitle> */}
-                                    <SetupInventory></SetupInventory>
+                                    <SetupGoods></SetupGoods>
                                     {/* <CardDescription>Card Description</CardDescription> */}
                                 </CardHeader>
                                 <CardContent className="px-4 py-0  flex items-center justify-center">
