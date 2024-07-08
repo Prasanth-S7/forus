@@ -23,3 +23,10 @@ model Inventory{
   contact String
   mailId String
 }
+
+model Good{
+  id Int @id @default(autoincrement())
+  name String
+  type String
+  Quantity Int
+}
