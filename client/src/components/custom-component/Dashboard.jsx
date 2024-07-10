@@ -40,9 +40,9 @@ export function Dashboard({ screenTitle, children}) {
                     <div className="flex-1">
                         <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
                             <a
-                                href="/"
+                                href="/dashboard"
                                 className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
-                                    isActive('/') ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
+                                    isActive('/dashboard') ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
                                 }`}
                             >
                                 Home

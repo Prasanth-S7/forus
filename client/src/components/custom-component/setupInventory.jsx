@@ -12,9 +12,11 @@ import { CardTitle } from "../ui/card"
 import { Button } from "../ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useToast } from "../ui/use-toast"
 import axios from "axios"
 
 export function SetupInventory() {
+    const { toast } = useToast();
     const [inventoryName, setInventoryName] = useState("")
     const [inventoryAddress, setInventoryAddress] = useState("")
     const [authorityIncharge, setAuthorityIncharge] = useState("")
@@ -38,10 +40,23 @@ export function SetupInventory() {
                     'Content-Type': 'application/json'
                 }
             })
-            console.log(res.data);
+            if (res.statusText === 'OK') {
+                toast({
+                    title: "Inventory Created",
+                    description: `${inventoryName} has been created`,
+                })
+            } else {
+                toast({
+                    title: "Failed to create inventory",
+                    description: `The inventory cannot be created due to some specific errors`,
+                })
+            }
         }
         catch (error) {
-            console.log(error);
+            toast({
+                title: "Failed to create inventory",
+                description: `Internal Server Error`,
+            })
         }
     }
     return (
