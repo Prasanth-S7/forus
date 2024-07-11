@@ -1,4 +1,7 @@
 import { Dashboard } from "@/components/custom-component/Dashboard";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import axios from 'axios'
 import {
   Card,
   CardContent,
@@ -50,6 +53,28 @@ const camps = [
 ]
 
 export function MoneyManager() {
+  const navigate = useNavigate()
+    useEffect(() => {
+        const checkAuth = async () => {
+          console.log('here')
+            const token = localStorage.getItem('token');
+            console.log(token)
+            if (!token) {
+                navigate('/login');
+            } else {
+                try {
+                    await axios.get('http://localhost:3000/api/v1/dashboard', {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                    console.log('no errors')
+                } catch (err) {
+                    console.log(err)
+                    navigate('/login');
+                }
+            }
+        };
+        checkAuth();
+    }, [navigate]);
   return (
     <div>
       <Dashboard screenTitle="MoneyManager">

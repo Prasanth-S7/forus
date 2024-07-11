@@ -11,10 +11,11 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useToast } from "@/components/ui/use-toast"
-import { Navigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 import axios from 'axios'
 
 export function LoginForm() {
+  const navigate = useNavigate();
   const { toast } = useToast();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -34,8 +35,9 @@ export function LoginForm() {
           title: "Login Successful",
           description: `You have logged in Successfully`,
         });
-        <Navigate to="/dashboard" replace={true}></Navigate>
-        console.log("hi there")
+        console.log(res.data.token)
+        localStorage.setItem('token', res.data.token)
+        navigate("/dashboard")
         return;
       } else {
         console.error("Unexpected response status:", res.status);

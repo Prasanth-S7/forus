@@ -4,9 +4,6 @@ import {
     Package2,
     Search,
 } from "lucide-react"
-
-import { Button } from "@/components/ui/button"
-
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -15,13 +12,16 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { MdDarkMode } from "react-icons/md";
 import { useContext } from "react"
 import { ThemeContext } from "./themeContext"
-import { useLocation } from "react-router-dom"
+import { Navigate, useLocation } from "react-router-dom"
+import { useNavigate } from "react-router-dom"
 export function Dashboard({ screenTitle, children}) {
+    const navigate = useNavigate();
     const location = useLocation();
     const isActive = (path) => location.pathname === path
     const { isDarkMode, toggleTheme } = useContext(ThemeContext)
@@ -167,7 +167,10 @@ export function Dashboard({ screenTitle, children}) {
                             <DropdownMenuItem>Settings</DropdownMenuItem>
                             <DropdownMenuItem>Support</DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem>Logout</DropdownMenuItem>
+                            <DropdownMenuItem onClick={()=>{
+                                localStorage.clear();
+                                navigate("/login")
+                            }}>Logout</DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
                 </header>

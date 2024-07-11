@@ -1,6 +1,9 @@
 import { Dashboard } from "@/components/custom-component/Dashboard";
 import { Button } from "@/components/ui/button";
 import { TransportPopUp } from "@/components/custom-component/TransportPopUp";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from 'axios'
 import {
     Table,
     TableBody,
@@ -79,6 +82,24 @@ const goods = [
 
 ]
 export function Transport() {
+    const navigate = useNavigate()
+    useEffect(() => {
+        const checkAuth = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                navigate('/login');
+            } else {
+                try {
+                    await axios.get('http://localhost:3000/api/v1/dashboard', {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                } catch (err) {
+                    navigate('/login');
+                }
+            }
+        };
+        checkAuth();
+    }, [navigate]);
     return (
         <div>
             <Dashboard screenTitle="Transport">

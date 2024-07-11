@@ -1,7 +1,8 @@
 import { Dashboard } from "@/components/custom-component/Dashboard";
-import { Button } from "@/components/ui/button";
 import { RequestFromCampPopUp } from "@/components/custom-component/RequestFromCampPopUp";
-import { MdDelete } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import axios from 'axios'
 import {
     Table,
     TableBody,
@@ -15,94 +16,112 @@ import {
 import { DonationFromPublicPopUp } from "@/components/custom-component/DonationFromPublicPopUp";
 const goods = [
     {
-        SNO : "1",
+        SNO: "1",
         Name: "Camp 1",
         GoodsNeeded: "apples",
-        Quantity : 10, 
+        Quantity: 10,
     },
     {
-        SNO : "2",
+        SNO: "2",
         Name: "Camp 1",
         GoodsNeeded: "apples",
-        Quantity : 10,
+        Quantity: 10,
     },
     {
-        SNO : "3",
+        SNO: "3",
         Name: "Camp 1",
         GoodsNeeded: "apples",
-        Quantity : 10,
+        Quantity: 10,
     },
     {
-        SNO : "4",
+        SNO: "4",
         Name: "Camp 1",
         GoodsNeeded: "apples",
-        Quantity : 10,
+        Quantity: 10,
     },
     {
-        SNO : "5",
+        SNO: "5",
         Name: "Camp 1",
         GoodsNeeded: "apples",
-        Quantity : 10,
+        Quantity: 10,
     },
     {
-        SNO : "6",
+        SNO: "6",
         Name: "Camp 1",
         GoodsNeeded: "apples",
-        Quantity : 10,
+        Quantity: 10,
     },
     {
-        SNO : "7",
+        SNO: "7",
         Name: "Camp 1",
         GoodsNeeded: "apples",
-        Quantity : 10,
+        Quantity: 10,
     },
 ]
 const goodsReceived = [
     {
-        SNO : "1",
+        SNO: "1",
         Name: "Prasanth",
         GoodsNeeded: "apples",
-        Quantity : 10, 
+        Quantity: 10,
     },
     {
-        SNO : "2",
+        SNO: "2",
         Name: "Prasanth",
         GoodsNeeded: "apples",
-        Quantity : 10,
+        Quantity: 10,
     },
     {
-        SNO : "3",
+        SNO: "3",
         Name: "Prasanth",
         GoodsNeeded: "apples",
-        Quantity : 10,
+        Quantity: 10,
     },
     {
-        SNO : "4",
+        SNO: "4",
         Name: "Prasanth",
         GoodsNeeded: "apples",
-        Quantity : 10,
+        Quantity: 10,
     },
     {
-        SNO : "5",
+        SNO: "5",
         Name: "Prasanth",
         GoodsNeeded: "apples",
-        Quantity : 10,
+        Quantity: 10,
     },
     {
-        SNO : "6",
+        SNO: "6",
         Name: "Prasanth",
         GoodsNeeded: "apples",
-        Quantity : 10,
+        Quantity: 10,
     },
     {
-        SNO : "7",
+        SNO: "7",
         Name: "Prasanth",
         GoodsNeeded: "apples",
-        Quantity : 10,
+        Quantity: 10,
     },
 ]
 
 export function Tracking() {
+    const navigate = useNavigate()
+    useEffect(() => {
+        const checkAuth = async () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                navigate('/login');
+            } else {
+                try {
+                    await axios.get('http://localhost:3000/api/v1/dashboard', {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                } catch (err) {
+                    navigate('/login');
+                }
+            }
+        };
+        checkAuth();
+    }, [navigate]);
     return (
         <div>
             <Dashboard screenTitle="Tracking">
@@ -123,7 +142,7 @@ export function Tracking() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {goods.map((item,key) => (
+                                {goods.map((item, key) => (
                                     <TableRow key={item.SNO}>
                                         <TableCell className="font-medium">{item.SNO}</TableCell>
                                         <TableCell>{item.Name}</TableCell>
@@ -157,13 +176,13 @@ export function Tracking() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {goodsReceived.map((item,key) => (
+                                {goodsReceived.map((item, key) => (
                                     <TableRow key={item.SNO}>
                                         <TableCell className="font-medium">{item.SNO}</TableCell>
                                         <TableCell>{item.Name}</TableCell>
                                         <TableCell>{item.GoodsNeeded}</TableCell>
                                         <TableCell>{item.Quantity}</TableCell>
-                                        <TableCell className="text-right"><DonationFromPublicPopUp/></TableCell>
+                                        <TableCell className="text-right"><DonationFromPublicPopUp /></TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

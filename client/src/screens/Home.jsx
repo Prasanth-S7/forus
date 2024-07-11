@@ -5,7 +5,9 @@ import { IconContext } from "react-icons";
 import { IoIosAdd } from "react-icons/io";
 import { IoIosSettings } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
+import { useState } from "react";
 import { MdInventory } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import {
     Table,
     TableBody,
@@ -19,6 +21,7 @@ import {
 import { Component } from "@/components/custom-component/pieChart";
 import { Card, CardContent, CardHeader, CardDescription, CardFooter, CardTitle } from "@/components/ui/card";
 import { SetupGoods } from "@/components/custom-component/setUpGoods";
+import axios from "axios";
 const goods = [
     {
         ItemId: "1",
@@ -66,6 +69,39 @@ const goods = [
 ]
 
 export function Home() {
+    const navigate = useNavigate()
+    const [inventoryAccess, setInventoryAccess] = useState(false)
+    const token = localStorage.getItem('token')
+    useEffect(() => {
+        const checkAuth = async () => {
+            if (!token) {
+                console.log('token not found')
+                navigate('/login');
+            } else {
+                try {
+                    await axios.get('http://localhost:3000/api/v1/dashboard', {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                } catch (err) {
+                    navigate('/login');
+                }
+            }
+        };
+        checkAuth();
+    }, [navigate]);
+
+    useEffect(()=>{
+        const checkInventoryAccess = async () => {
+            const res = await axios.get(`http://localhost:3000/manager/inventoryaccess/${token}`)
+            if(res.data.access){
+                setInventoryAccess(true)
+            }
+            else{
+                setInventoryAccess(false)
+            }
+        }
+        checkInventoryAccess();
+    },[token])
 
     return (
         <div>

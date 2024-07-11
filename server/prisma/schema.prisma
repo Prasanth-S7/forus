@@ -11,16 +11,31 @@ model Inventory{
   id   Int   @id @default(autoincrement())
   inventoryName String
   inventoryAddress String
-  authorityIncharge String
+  authorityIncharge AuthorityIncharge
   inventoryManager String
   Manageraddress String
+  setUpInventoryAccess Boolean @default(false)
   contact String
   mailId String
+  goods Good[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  password String
 }
 
-model Good{
-  id Int @id @default(autoincrement())
-  name String
-  type String
-  Quantity Int
+model Good {
+  id          Int       @id @default(autoincrement())
+  name        String
+  type        String
+  quantity    Int
+  inventoryId Int
+  inventory   Inventory @relation(fields: [inventoryId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+enum AuthorityIncharge{
+  GOVT
+  NGO
+  PRIVATE
 }
