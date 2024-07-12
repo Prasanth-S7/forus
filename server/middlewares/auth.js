@@ -1,6 +1,6 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
-
+import { JWT_SECRET } from '../index.js';
 export const auth = express.Router();
 
 auth.use((req, res, next) => {
@@ -10,14 +10,15 @@ auth.use((req, res, next) => {
         });
     }
     const userToken = req.headers.authorization.split(" ")[1];
-    console.log(jwt.decode(userToken))
-    jwt.verify(userToken, "secret", (err, decoded) => {
+    jwt.verify(userToken, JWT_SECRET, (err, decoded) => {
         if (err) {
             return res.status(401).json({
                 msg: "Invalid token"
             });
         }
-        // req.user = decoded;
+        req.userDetails = decoded
+        console.log("decoded")
+        console.log(req.userDetails.username)
         next();
     });
 });

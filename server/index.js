@@ -3,9 +3,11 @@ const router = express.Router();
 import { goods } from './routes/goods.js';
 import { inventory } from './routes/inventory.js';
 import { manager } from './routes/inventoryManager.js';
-import jwt from 'jsonwebtoken'
 import { auth } from './middlewares/auth.js';
 import cors from 'cors';
+import dotenv from 'dotenv'
+dotenv.config();
+export const JWT_SECRET = process.env.JWT_SECRET;
 const app = express()
 app.use(express.json())
 app.use(cors())

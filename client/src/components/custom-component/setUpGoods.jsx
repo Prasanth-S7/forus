@@ -22,13 +22,16 @@ export function SetupGoods() {
     const [goodType, setGoodType] = useState("")
     const addGoodHandler = async () => {
         try {
+
+            console.log('reaches')
             const res = await axios.post('http://localhost:3000/goods/addgood', {
                 "name": goodName,
                 "quantity": parseInt(goodQuantity),
                 "type": goodType,
             }, {
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${localStorage.getItem('token')}` 
                 }
             })
             if (res.statusText === 'OK') {
@@ -45,6 +48,7 @@ export function SetupGoods() {
             }
         }
         catch (error) {
+            console.log(error)
             toast({
                 title: "Failed to add Good",
                 description: `Internal Server Error`,

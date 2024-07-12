@@ -90,18 +90,18 @@ export function Home() {
         checkAuth();
     }, [navigate]);
 
-    useEffect(()=>{
+    useEffect(() => {
         const checkInventoryAccess = async () => {
             const res = await axios.get(`http://localhost:3000/manager/inventoryaccess/${token}`)
-            if(res.data.access){
+            if (res.data.access) {
                 setInventoryAccess(true)
             }
-            else{
+            else {
                 setInventoryAccess(false)
             }
         }
         checkInventoryAccess();
-    },[token])
+    }, [token])
 
     return (
         <div>
@@ -126,18 +126,21 @@ export function Home() {
                                 </CardContent>
                             </Card>
                         </div>
-                        <div className="h-[200px] mt-3 ">
-                            <Card className="flex items-center justify-evenly h-full">
-                                <CardHeader>
-                                    {/* <CardTitle>Setup Inventory</CardTitle> */}
-                                    <SetupInventory></SetupInventory>
-                                    {/* <CardDescription>Card Description</CardDescription> */}
-                                </CardHeader>
-                                <CardContent className="px-4 py-0  flex items-center justify-center">
-                                    <MdInventory size={70} />
-                                </CardContent>
-                            </Card>
-                        </div>
+                        {inventoryAccess && (
+                            <div className="h-[200px] mt-3 ">
+                                <Card className="flex items-center justify-evenly h-full">
+                                    <CardHeader>
+                                        {/* <CardTitle>Setup Inventory</CardTitle> */}
+                                        <SetupInventory></SetupInventory>
+                                        {/* <CardDescription>Card Description</CardDescription> */}
+                                    </CardHeader>
+                                    <CardContent className="px-4 py-0  flex items-center justify-center">
+                                        <MdInventory size={70} />
+                                    </CardContent>
+                                </Card>
+                            </div>
+                        )
+                        }
 
                     </div>
                     <div className="px-10 mt-4 h-[350px] overflow-y-auto scrollBar">
