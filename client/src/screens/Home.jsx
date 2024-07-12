@@ -11,67 +11,25 @@ import { useNavigate } from "react-router-dom";
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
-    TableFooter,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
 import { Component } from "@/components/custom-component/pieChart";
-import { Card, CardContent, CardHeader, CardDescription, CardFooter, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, } from "@/components/ui/card";
 import { SetupGoods } from "@/components/custom-component/setUpGoods";
 import axios from "axios";
-const goods = [
-    {
-        ItemId: "1",
-        Name: "Biscuits",
-        Type: "Grocery",
-        Quantity: "10"
-    },
-    {
-        ItemId: "2",
-        Name: "Biscuits",
-        Type: "Grocery",
-        Quantity: "10"
-    },
-    {
-        ItemId: "3",
-        Name: "Biscuits",
-        Type: "Grocery",
-        Quantity: "10"
-    },
-    {
-        ItemId: "4",
-        Name: "Biscuits",
-        Type: "Grocery",
-        Quantity: "10"
-    },
-    {
-        ItemId: "5",
-        Name: "Biscuits",
-        Type: "Grocery",
-        Quantity: "10"
-    },
-    {
-        ItemId: "6",
-        Name: "Biscuits",
-        Type: "Grocery",
-        Quantity: "10"
-    },
-    {
-        ItemId: "7",
-        Name: "Biscuits",
-        Type: "Grocery",
-        Quantity: "10"
-    },
-
-]
 
 export function Home() {
     const navigate = useNavigate()
     const [inventoryAccess, setInventoryAccess] = useState(false)
+    const [addGoodClicked, setAddGoodClicked] = useState(false);
+    const [goods, setGoods] = useState([])
     const token = localStorage.getItem('token')
+    const onClickHandler = ()=>{
+        setAddGoodClicked(!addGoodClicked);
+    }
     useEffect(() => {
         const checkAuth = async () => {
             if (!token) {
@@ -103,6 +61,25 @@ export function Home() {
         checkInventoryAccess();
     }, [token])
 
+    useEffect(() => {
+        const getGoods = async () => {
+            try {
+                const res = await axios.get(`http://localhost:3000/goods/getgoods`,{
+                    headers:{
+                        Authorization:`Bearer ${token}`
+                    }
+                });
+                if (res.data) {
+                    setGoods(res.data.goods)
+                }
+            }
+            catch(error){
+                console.log(error)
+            }
+        }
+        getGoods();
+    },[addGoodClicked])
+
     return (
         <div>
             <Dashboard screenTitle="Home">
@@ -118,7 +95,7 @@ export function Home() {
                             <Card className="flex items-center justify-evenly h-full">
                                 <CardHeader>
                                     {/* <CardTitle>Setup Inventory</CardTitle> */}
-                                    <SetupGoods></SetupGoods>
+                                    <SetupGoods onClickHandler={onClickHandler}></SetupGoods>
                                     {/* <CardDescription>Card Description</CardDescription> */}
                                 </CardHeader>
                                 <CardContent className="px-4 py-0  flex items-center justify-center">
@@ -157,11 +134,11 @@ export function Home() {
                             </TableHeader>
                             <TableBody>
                                 {goods.map((item) => (
-                                    <TableRow className="h-[50px]" key={item.ItemId}>
-                                        <TableCell className="font-medium ">{item.ItemId}</TableCell>
-                                        <TableCell>{item.Name}</TableCell>
-                                        <TableCell>{item.Type}</TableCell>
-                                        <TableCell>{item.Quantity}</TableCell>
+                                    <TableRow className="h-[50px]" key={item.id}>
+                                        <TableCell className="font-medium ">{item.id}</TableCell>
+                                        <TableCell>{item.name}</TableCell>
+                                        <TableCell>{item.type}</TableCell>
+                                        <TableCell>{item.quantity}</TableCell>
                                         <TableCell className="flex gap-x-2 justify-end items-center h-[50px] ">
                                             <IconContext.Provider value={{ className: "Icon" }}>
                                                 <IoIosAdd size={20} />

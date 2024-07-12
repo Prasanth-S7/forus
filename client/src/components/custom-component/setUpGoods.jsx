@@ -15,15 +15,14 @@ import { Label } from "@/components/ui/label"
 import axios from "axios"
 import { useToast } from "@/components/ui/use-toast"
 
-export function SetupGoods() {
+export function SetupGoods({onClickHandler}) {
     const { toast } = useToast();
     const [goodName, setGoodName] = useState("")
     const [goodQuantity, setGoodQuantity] = useState("")
     const [goodType, setGoodType] = useState("")
+    const [addGoodClicked, setAddGoodClicked] = useState(false)
     const addGoodHandler = async () => {
         try {
-
-            console.log('reaches')
             const res = await axios.post('http://localhost:3000/goods/addgood', {
                 "name": goodName,
                 "quantity": parseInt(goodQuantity),
@@ -35,11 +34,11 @@ export function SetupGoods() {
                 }
             })
             if (res.statusText === 'OK') {
-                console.log('reached')
                 toast({
                     title: "Good Added",
                     description: `${goodQuantity} ${goodName} has been added to the inventory`,
                 })
+                setAddGoodClicked(!addGoodClicked)
             } else {
                 toast({
                     title: "Failed to add Good",
@@ -108,7 +107,9 @@ export function SetupGoods() {
                     </div>
                 </div>
                 <DialogFooter>
-                    <Button onClick={() => addGoodHandler()} type="submit">Add Good</Button>
+                    <Button onClick={() => {addGoodHandler()
+                        onClickHandler()
+                    }} type="submit">Add Good</Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>)

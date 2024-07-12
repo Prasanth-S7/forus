@@ -20,5 +20,9 @@ Navigate to the server directory and run ``` npx prisma migrate dev ``` to migra
 
 Navigate to the server and run ``` cp .env.example .env ``` and populate all the required variables
 
+This project uses mailHog to create a fake SMTP server. Install it via using docker by ``` docker run -d -p 1025:1025 -p 8025:8025 mailhog/mailhog ```
+
+You will be able to see the mail dashboard in http://localhost:8025
+
 Run ``` npm run dev ``` in the client and server directory to run local server 
 

@@ -35,7 +35,25 @@ goods.post('/addgood', async (req, res) => {
 
 goods.get('/getgoods', async (req, res) => {
     try {
-        const good = await prisma.good.findMany()
+        const inventoryId = await prisma.inventory.findFirst({
+            where:{
+                inventoryManager:req.userDetails.username,
+            },
+            select:{
+                id:true
+            }
+        })
+        const good = await prisma.good.findMany({
+            where:{
+                inventoryId: inventoryId.id
+            },select:{
+                id:true,
+                name:true,
+                type:true,
+                quantity:true,
+
+            }
+        })
         res.status(200).json({
             goods: good
         })

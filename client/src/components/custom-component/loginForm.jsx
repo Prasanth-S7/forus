@@ -35,7 +35,6 @@ export function LoginForm() {
           title: "Login Successful",
           description: `You have logged in Successfully`,
         });
-        console.log(res.data.token)
         localStorage.setItem('token', res.data.token)
         navigate("/dashboard")
         return;

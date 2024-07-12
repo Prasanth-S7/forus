@@ -17,8 +17,6 @@ auth.use((req, res, next) => {
             });
         }
         req.userDetails = decoded
-        console.log("decoded")
-        console.log(req.userDetails.username)
         next();
     });
 });
