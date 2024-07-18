@@ -7,7 +7,9 @@ import { Tracking } from './screens/Tracking';
 import { Transport } from './screens/Transport';
 import { Login } from './screens/Login';
 import { Toaster } from "@/components/ui/toaster"
+import { Floodhub} from './screens/FloodHub';
 import './index.css';
+import { Pdrs } from './screens/Pdrs';
 
 const App = () => {
   return (
@@ -19,6 +21,8 @@ const App = () => {
           <Route path="/moneymanager" element={<MoneyManager />} />
           <Route path="/transport" element={<Transport />} />
           <Route path="/tracking" element={<Tracking />} />
+          <Route path="/pdrs" element={<Pdrs />}></Route>
+          <Route path="/floodhub" element={<Floodhub />}></Route>
         </Routes>
       </BrowserRouter>
       <Toaster />

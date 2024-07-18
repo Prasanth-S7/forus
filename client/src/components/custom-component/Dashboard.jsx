@@ -14,13 +14,14 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { PopoverDemo } from "./popOver"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { MdDarkMode } from "react-icons/md";
 import { useContext } from "react"
 import { ThemeContext } from "./themeContext"
 import { Navigate, useLocation } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
-export function Dashboard({ screenTitle, children}) {
+export function Dashboard({ screenTitle, children }) {
     const navigate = useNavigate();
     const location = useLocation();
     const isActive = (path) => location.pathname === path
@@ -41,42 +42,38 @@ export function Dashboard({ screenTitle, children}) {
                         <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
                             <a
                                 href="/dashboard"
-                                className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
-                                    isActive('/dashboard') ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
-                                }`}
+                                className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${isActive('/dashboard') ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
+                                    }`}
                             >
                                 Home
                             </a>
                             <a
                                 href="/transport"
-                                className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
-                                    isActive('/transport') ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
-                                }`}
+                                className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${isActive('/transport') ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
+                                    }`}
                             >
                                 Transport
                             </a>
                             <a
                                 href="/tracking"
-                                className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
-                                    isActive('/tracking') ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
-                                }`}
+                                className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${isActive('/tracking') ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
+                                    }`}
                             >
                                 Tracking
                             </a>
                             <a
                                 href="/moneymanager"
-                                className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
-                                    isActive('/moneymanager') ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
-                                }`}
+                                className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${isActive('/moneymanager') ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
+                                    }`}
 
                             >
                                 MoneyManager
                             </a>
+                            <PopoverDemo></PopoverDemo>
                             <a
                                 href="/settings"
-                                className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${
-                                    isActive('/settings') ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
-                                }`}
+                                className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${isActive('/settings') ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
+                                    }`}
                             >
                                 Settings
                             </a>
@@ -102,41 +99,41 @@ export function Dashboard({ screenTitle, children}) {
                         <SheetContent side="left" className="flex flex-col">
                             <nav className="grid gap-2 text-lg font-medium">
                                 <a
-                                    href="#"
-                                    className="flex items-center gap-2 text-lg font-semibold"
+                                    href="/dashboard"
+                                    className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${isActive('/dashboard') ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
+                                        }`}
                                 >
-                                    <Package2 className="h-6 w-6" />
-                                    <span className="sr-only">Acme Inc</span>
+                                    Home
                                 </a>
                                 <a
-                                    href="#"
-                                    className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                                    href="/transport"
+                                    className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${isActive('/transport') ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
+                                        }`}
                                 >
-                                    Dashboard
+                                    Transport
                                 </a>
                                 <a
-                                    href="#"
-                                    className="mx-[-0.65rem] flex items-center gap-4 rounded-xl bg-muted px-3 py-2 text-foreground hover:text-foreground"
+                                    href="/tracking"
+                                    className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${isActive('/tracking') ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
+                                        }`}
                                 >
-                                    Orders
+                                    Tracking
                                 </a>
                                 <a
-                                    href="#"
-                                    className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                                    href="/moneymanager"
+                                    className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${isActive('/moneymanager') ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
+                                        }`}
+
                                 >
-                                    Products
+                                    MoneyManager
                                 </a>
+                                <PopoverDemo></PopoverDemo>
                                 <a
-                                    href="#"
-                                    className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
+                                    href="/settings"
+                                    className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${isActive('/settings') ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
+                                        }`}
                                 >
-                                    Customers
-                                </a>
-                                <a
-                                    href="#"
-                                    className="mx-[-0.65rem] flex items-center gap-4 rounded-xl px-3 py-2 text-muted-foreground hover:text-foreground"
-                                >
-                                    Analytics
+                                    Settings
                                 </a>
                             </nav>
 
@@ -167,7 +164,7 @@ export function Dashboard({ screenTitle, children}) {
                             <DropdownMenuItem>Settings</DropdownMenuItem>
                             <DropdownMenuItem>Support</DropdownMenuItem>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={()=>{
+                            <DropdownMenuItem onClick={() => {
                                 localStorage.clear();
                                 navigate("/login")
                             }}>Logout</DropdownMenuItem>
