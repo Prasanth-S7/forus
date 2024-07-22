@@ -33,6 +33,24 @@ model Good {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 }
+model User{
+  id Int @id @default(autoincrement())
+  username String @unique
+  password String  
+  createdAt DateTime @default(now())
+}
+
+model Camp{
+  id Int @id @default(autoincrement())
+  name String
+  latitude String
+  longitude String
+  totalCapacity Int
+  currentCapacity Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
+
 
 enum AuthorityIncharge{
   GOVT
