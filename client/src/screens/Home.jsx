@@ -6,6 +6,7 @@ import { AddGoodDialog } from "@/components/custom-component/addGoodDialog";
 import { useState } from "react";
 import { MdInventory } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
+import { TailSpin } from "react-loader-spinner";
 import {
     Table,
     TableBody,
@@ -24,6 +25,7 @@ export function Home() {
     const [inventoryAccess, setInventoryAccess] = useState(false)
     const [addGoodClicked, setAddGoodClicked] = useState(false);
     const [goods, setGoods] = useState([])
+    const [loading, setLoading] = useState(true)
     const token = localStorage.getItem('token')
     const onClickHandler = () => {
         setAddGoodClicked(!addGoodClicked);
@@ -68,6 +70,7 @@ export function Home() {
                     }
                 });
                 if (res.data) {
+                    setLoading(false)
                     setGoods(res.data.goods)
                 }
             }
@@ -115,43 +118,45 @@ export function Home() {
 
                     </div>
                     <div className="px-10 mt-4 h-[350px] overflow-y-auto scrollBar">
-                        <Table>
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead className="w-[100px]">ItemId</TableHead>
-                                    <TableHead>Name</TableHead>
-                                    <TableHead>Type</TableHead>
-                                    <TableHead >Quantity</TableHead>
-                                    <TableHead className="text-right">Edit</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {goods.map((item, index) => (
-                                    <TableRow className="h-[50px]" key={item.id}>
-                                        <TableCell className="font-medium ">{item.id}</TableCell>
-                                        <TableCell>{item.name}</TableCell>
-                                        <TableCell>{item.type}</TableCell>
-                                        <TableCell>{item.quantity}</TableCell>
-                                        <TableCell className="flex gap-x-2 justify-end items-center h-[50px] ">
-                                            <AddGoodDialog id={item.id}></AddGoodDialog>
-                                            <DeleteGoodDialog id={item.id}></DeleteGoodDialog>
-                                        </TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                            {/* <TableFooter>
-                                <TableRow>
-                                    <TableCell colSpan={3}>Total</TableCell>
-                                    <TableCell className="text-right">$2,500.00</TableCell>
-                                </TableRow>
-                            </TableFooter> */}
-                        </Table>
+                        {
+                            loading ? (
+                                <div className="flex h-full flex-col items-center justify-center">
+                                    <div className="flex items-center justify-center">
+                                        <TailSpin height="20" width="20" color="#4fa94d" ariaLabel="tail-spin-loading"></TailSpin>
+                                    </div>
+                                </div>
+                            ) : (
+                                <Table>
+                                    <TableHeader>
+                                        <TableRow>
+                                            <TableHead className="w-[100px]">ItemId</TableHead>
+                                            <TableHead>Name</TableHead>
+                                            <TableHead>Type</TableHead>
+                                            <TableHead >Quantity</TableHead>
+                                            <TableHead className="text-right">Edit</TableHead>
+                                        </TableRow>
+                                    </TableHeader>
+
+                                    <TableBody>
+                                        {goods.map((item, index) => (
+                                            <TableRow className="h-[50px]" key={item.id}>
+                                                <TableCell className="font-medium ">{item.id}</TableCell>
+                                                <TableCell>{item.name}</TableCell>
+                                                <TableCell>{item.type}</TableCell>
+                                                <TableCell>{item.quantity}</TableCell>
+                                                <TableCell className="flex gap-x-2 justify-end items-center h-[50px] ">
+                                                    <AddGoodDialog id={item.id}></AddGoodDialog>
+                                                    <DeleteGoodDialog id={item.id}></DeleteGoodDialog>
+                                                </TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            )
+                        }
                     </div>
                 </div>
-
-
-            </Dashboard>
-
-        </div>
+            </Dashboard >
+        </div >
     )
 }

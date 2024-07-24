@@ -71,3 +71,19 @@ model campRequests{
   requiredAmount Int
   status Boolean @default(false)
 }
+
+model CampGoodRequests{
+  id Int @id @default(autoincrement())
+  campName String
+  goodsNeeded String
+  quantity Int
+  status Boolean @default(false)
+}
+
+model DonationsFromPublic{
+  id Int @id @default(autoincrement())
+  name String
+  goodsNeeded String
+  quantity Int
+  status Boolean @default(false)
+}

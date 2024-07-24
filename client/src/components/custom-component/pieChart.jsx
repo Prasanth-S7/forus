@@ -16,11 +16,11 @@ import {
     ChartTooltipContent,
 } from "@/components/ui/chart"
 const chartData = [
-    { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-    { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-    { browser: "firefox", visitors: 287, fill: "var(--color-firefox)" },
-    { browser: "edge", visitors: 173, fill: "var(--color-edge)" },
-    { browser: "other", visitors: 190, fill: "var(--color-other)" },
+    { browser: "Water Bottles", visitors: 275, fill: "var(--color-chrome)" },
+    { browser: "Sanitary Napkins", visitors: 200, fill: "var(--color-safari)" },
+    { browser: "Blankets", visitors: 287, fill: "var(--color-firefox)" },
+    { browser: "Tents", visitors: 173, fill: "var(--color-edge)" },
+    { browser: "Masks", visitors: 190, fill: "var(--color-other)" },
 ]
 
 const chartConfig = {
@@ -28,23 +28,23 @@ const chartConfig = {
         label: "Visitors",
     },
     chrome: {
-        label: "Chrome",
+        label: "Water Bottles",
         color: "hsl(var(--chart-1))",
     },
     safari: {
-        label: "Safari",
+        label: "Sanitary Napkins",
         color: "hsl(var(--chart-2))",
     },
     firefox: {
-        label: "Firefox",
+        label: "Blankets",
         color: "hsl(var(--chart-3))",
     },
     edge: {
-        label: "Edge",
+        label: "Tents",
         color: "hsl(var(--chart-4))",
     },
     other: {
-        label: "Other",
+        label: "Masks",
         color: "hsl(var(--chart-5))",
     },
 }
@@ -58,7 +58,7 @@ export function Component({ goodsTitle }) {
         <Card className="flex flex-row justify-end items-center h-full w-[300px] gap-x-0 px-0 ">
             <CardHeader className="items-center pb-0  ">
                 <CardTitle>{goodsTitle}</CardTitle>
-                <CardDescription>January - June 2023</CardDescription>
+                <CardDescription>March - June 2024</CardDescription>
             </CardHeader>
             <CardContent className="flex-1 pb-0 px-0 ml-0  w-[100px]">
                 <ChartContainer
