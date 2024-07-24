@@ -64,3 +64,10 @@ enum AuthorityIncharge {
   NGO
   PRIVATE
 }
+
+model campRequests{
+  id Int @id @default(autoincrement())
+  campName String
+  requiredAmount Int
+  status Boolean @default(false)
+}
