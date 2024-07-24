@@ -73,3 +73,17 @@ This system integrates real-time data analysis and verification to enhance disas
     cd ../server
     npm run dev
     ```
+
+## Screenshots
+
+![Home Page](https://github.com/Prasanth-S7/forus/blob/main/client/public/assets/home_forus.png)
+
+![Transport Page](https://github.com/Prasanth-S7/forus/blob/main/client/public/assets/transport_forus.png)
+
+![Tracking Page](https://github.com/Prasanth-S7/forus/blob/main/client/public/assets/tracking_forus.png)
+
+![MoneyManager Page](https://github.com/Prasanth-S7/forus/blob/main/client/public/assets/money_forus.png)
+
+![Vendors Page](https://github.com/Prasanth-S7/forus/blob/main/client/public/assets/vendors_forus.png)
+
+![Disaster Navigator Page](https://github.com/Prasanth-S7/forus/blob/main/client/public/assets/navigator_forus.png)
