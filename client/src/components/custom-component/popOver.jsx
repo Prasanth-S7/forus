@@ -14,7 +14,7 @@ export function PopoverDemo() {
             <PopoverTrigger asChild>
                 <button className={` rounded-lg transition-all py-2 text-left px-3 ${isActive('/pdrs') ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'}`} >Alert</button>
             </PopoverTrigger>
-            <PopoverContent className="w-[250px] bg-[#0d1526] text-sm font-semibold">
+            <PopoverContent className="w-[250px] text-sm font-semibold">
                 <div className="flex flex-col ">
                     <a
                         href="/pdrs"
@@ -30,7 +30,7 @@ export function PopoverDemo() {
                             }`}
 
                     >
-                        Flood Hub
+                        Disaster Navigator
                     </a>
                 </div>
             </PopoverContent>

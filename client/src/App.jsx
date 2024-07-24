@@ -8,6 +8,7 @@ import { Transport } from './screens/Transport';
 import { Login } from './screens/Login';
 import { Toaster } from "@/components/ui/toaster"
 import { Floodhub} from './screens/FloodHub';
+import { Vendors } from './screens/Vendors';
 import './index.css';
 import { Pdrs } from './screens/Pdrs';
 
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/tracking" element={<Tracking />} />
           <Route path="/pdrs" element={<Pdrs />}></Route>
           <Route path="/floodhub" element={<Floodhub />}></Route>
+          <Route path="/vendors" element={<Vendors />}></Route>
         </Routes>
       </BrowserRouter>
       <Toaster />

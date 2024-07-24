@@ -1,6 +1,6 @@
 import { Dashboard } from "@/components/custom-component/Dashboard";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from 'axios'
 import {
   Card,
@@ -21,60 +21,72 @@ import {
 import { Button } from "@/components/ui/button";
 const camps = [
   {
-    SNO : "1",
-    camp:"camp 1",
-    RequiredAmount : "50000",
-    Review : "Send"
+    SNO: "1",
+    camp: "camp 1",
+    RequiredAmount: "50000",
+    Review: "Send"
   },
   {
-    SNO : "2",
-    camp:"camp 1",
-    RequiredAmount : "50000",
-    Review : "Send"
+    SNO: "2",
+    camp: "camp 1",
+    RequiredAmount: "50000",
+    Review: "Send"
   },
   {
-    SNO : "3",
-    camp:"camp 1",
-    RequiredAmount : "50000",
-    Review : "Send"
+    SNO: "3",
+    camp: "camp 1",
+    RequiredAmount: "50000",
+    Review: "Send"
   },
   {
-    SNO : "4",
-    camp:"camp 1",
-    RequiredAmount : "50000",
-    Review : "Send"
+    SNO: "4",
+    camp: "camp 1",
+    RequiredAmount: "50000",
+    Review: "Send"
   },
   {
-    SNO : "5",
-    camp:"camp 1",
-    RequiredAmount : "50000",
-    Review : "Send"
+    SNO: "5",
+    camp: "camp 1",
+    RequiredAmount: "50000",
+    Review: "Send"
   },
 ]
 
 export function MoneyManager() {
+  const [camps, setCamps] = useState([])
+  useEffect(() => {
+    const fetchRequests = async () => {
+      try {
+        const res = await axios.get("http://localhost:3000/camp/getallrequestsfromcamp");
+        setCamps(res.data);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
+    fetchRequests();
+  }, [])
   const navigate = useNavigate()
-    useEffect(() => {
-        const checkAuth = async () => {
-          console.log('here')
-            const token = localStorage.getItem('token');
-            console.log(token)
-            if (!token) {
-                navigate('/login');
-            } else {
-                try {
-                    await axios.get('http://localhost:3000/api/v1/dashboard', {
-                        headers: { Authorization: `Bearer ${token}` }
-                    });
-                    console.log('no errors')
-                } catch (err) {
-                    console.log(err)
-                    navigate('/login');
-                }
-            }
-        };
-        checkAuth();
-    }, [navigate]);
+  useEffect(() => {
+    const checkAuth = async () => {
+      console.log('here')
+      const token = localStorage.getItem('token');
+      console.log(token)
+      if (!token) {
+        navigate('/login');
+      } else {
+        try {
+          await axios.get('http://localhost:3000/api/v1/dashboard', {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          console.log('no errors')
+        } catch (err) {
+          console.log(err)
+          navigate('/login');
+        }
+      }
+    };
+    checkAuth();
+  }, [navigate]);
   return (
     <div>
       <Dashboard screenTitle="MoneyManager">
@@ -94,7 +106,7 @@ export function MoneyManager() {
         </div>
         <div className="w-full px-10">
           <Table className="mt-3 px-5 w-full rounded-md ">
-            <TableCaption>A list of your recent invoices.</TableCaption>
+            <TableCaption>A list of request from camps.</TableCaption>
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[100px]">SNO</TableHead>
@@ -104,16 +116,18 @@ export function MoneyManager() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {camps.map((camp) => (
-                <TableRow key={camp.SNO}>
-                  <TableCell className="font-medium ">{camp.SNO}</TableCell>
-                  <TableCell className="">{camp.camp}</TableCell>
-                  <TableCell>{camp.RequiredAmount}</TableCell>
-                  <TableCell className="text-right"><Button>{camp.Review}</Button></TableCell>
+              {camps.filter(camp => camp.status === false).map((camp) => (
+                <TableRow key={camp.id}>
+                  <TableCell className="font-medium">{camp.id}</TableCell>
+                  <TableCell className="">{camp.campName}</TableCell>
+                  <TableCell>{camp.requiredAmount}</TableCell>
+                  <TableCell className="text-right">
+                    <Button>Send</Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
-            
+
           </Table>
         </div>
       </Dashboard>

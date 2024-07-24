@@ -12,6 +12,7 @@ import axios from "axios"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
 import { Dashboard } from "@/components/custom-component/Dashboard"
+
 export const Pdrs = (() => {
     /*const predictions = {
         "predictions": {
@@ -523,7 +524,7 @@ export const Pdrs = (() => {
     const [password, setPassword] = useState('')
     const [tweetCount, setTweetCount] = useState('')
     const generateReportHandler = (async (tweet)=>{
-        const res = await axios.post('http://192.168.137.152:8080/api_validation/location_finder_twitter',{
+        const res = await axios.post('https://0e75-115-99-64-184.ngrok-free.app/api_validation/location_finder_twitter',{
             "tweet":tweet
         },{
             headers:{
@@ -531,14 +532,32 @@ export const Pdrs = (() => {
             }
         });
         const firstResponse = res.data
-        const getPopulation = await axios.post('http://192.168.137.152:8080/api_validation/get_population', {
+        console.log(firstResponse.locations.location)
+        if(firstResponse.status === "error" || firstResponse.locations.location=== null){
+            alert("the tweet has no information about location")
+            return;
+        }
+        if(firstResponse.locations.location){
+            console.log("reached")
+        const getPopulation = await axios.post('https://0e75-115-99-64-184.ngrok-free.app/api_validation/get_population', {
             location_name: firstResponse.locations.location,
-            is_urban: firstResponse.locations.is_urban
+            is_urban: firstResponse.locations.is_urban,
+            radius:2
         });
         console.log(getPopulation.data)
+        const getReport = await axios.post('https://0e75-115-99-64-184.ngrok-free.app/api_model/get_report', {
+            "tweet":tweet,
+            "population":getPopulation.data
+        },{
+            headers:{
+                "Content-Type":"application/json"
+            }
+        })
+        console.log(getReport.data);
+    }
     })
     const runFunction = (async () => {
-        const res = await axios.post('http://192.168.137.152:8080/api_twitter/scrape_twitter', {
+        const res = await axios.post('https://0e75-115-99-64-184.ngrok-free.app/api_twitter/scrape_twitter', {
 
             "username": username,
             "password": password,

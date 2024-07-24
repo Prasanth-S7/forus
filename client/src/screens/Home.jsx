@@ -1,10 +1,8 @@
 import { Dashboard } from "@/components/custom-component/Dashboard";
 import { useContext, useEffect } from "react";
 import { SetupInventory } from "@/components/custom-component/setupInventory";
-import { IconContext } from "react-icons";
-import { IoIosAdd } from "react-icons/io";
-import { IoIosSettings } from "react-icons/io";
-import { MdDelete } from "react-icons/md";
+import { DeleteGoodDialog } from "@/components/custom-component/deleteGoodDialog";
+import { AddGoodDialog } from "@/components/custom-component/addGoodDialog";
 import { useState } from "react";
 import { MdInventory } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
@@ -27,7 +25,7 @@ export function Home() {
     const [addGoodClicked, setAddGoodClicked] = useState(false);
     const [goods, setGoods] = useState([])
     const token = localStorage.getItem('token')
-    const onClickHandler = ()=>{
+    const onClickHandler = () => {
         setAddGoodClicked(!addGoodClicked);
     }
     useEffect(() => {
@@ -64,21 +62,21 @@ export function Home() {
     useEffect(() => {
         const getGoods = async () => {
             try {
-                const res = await axios.get(`http://localhost:3000/goods/getgoods`,{
-                    headers:{
-                        Authorization:`Bearer ${token}`
+                const res = await axios.get(`http://localhost:3000/goods/getgoods`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
                     }
                 });
                 if (res.data) {
                     setGoods(res.data.goods)
                 }
             }
-            catch(error){
+            catch (error) {
                 console.log(error)
             }
         }
         getGoods();
-    },[addGoodClicked])
+    }, [addGoodClicked])
 
     return (
         <div>
@@ -92,24 +90,20 @@ export function Home() {
                             <Component goodsTitle="Critical Updates" className=""></Component>
                         </div>
                         <div className="h-[200px] mt-3 ">
-                                <Card className="flex items-center justify-evenly h-full">
-                                    <CardHeader>
-                                        {/* <CardTitle>Setup Inventory</CardTitle> */}
-                                        <SetupGoods></SetupGoods>
-                                        {/* <CardDescription>Card Description</CardDescription> */}
-                                    </CardHeader>
-                                    <CardContent className="px-4 py-0  flex items-center justify-center">
-                                        <MdInventory size={70} />
-                                    </CardContent>
-                                </Card>
-                            </div>
+                            <Card className="flex items-center justify-evenly h-full">
+                                <CardHeader>
+                                    <SetupGoods></SetupGoods>
+                                </CardHeader>
+                                <CardContent className="px-4 py-0  flex items-center justify-center">
+                                    <MdInventory size={70} />
+                                </CardContent>
+                            </Card>
+                        </div>
                         {inventoryAccess && (
                             <div className="h-[200px] mt-3 ">
                                 <Card className="flex items-center justify-evenly h-full">
                                     <CardHeader>
-                                        {/* <CardTitle>Setup Inventory</CardTitle> */}
                                         <SetupInventory></SetupInventory>
-                                        {/* <CardDescription>Card Description</CardDescription> */}
                                     </CardHeader>
                                     <CardContent className="px-4 py-0  flex items-center justify-center">
                                         <MdInventory size={70} />
@@ -122,7 +116,6 @@ export function Home() {
                     </div>
                     <div className="px-10 mt-4 h-[350px] overflow-y-auto scrollBar">
                         <Table>
-                            {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
                             <TableHeader>
                                 <TableRow>
                                     <TableHead className="w-[100px]">ItemId</TableHead>
@@ -133,22 +126,15 @@ export function Home() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {goods.map((item) => (
+                                {goods.map((item, index) => (
                                     <TableRow className="h-[50px]" key={item.id}>
                                         <TableCell className="font-medium ">{item.id}</TableCell>
                                         <TableCell>{item.name}</TableCell>
                                         <TableCell>{item.type}</TableCell>
                                         <TableCell>{item.quantity}</TableCell>
                                         <TableCell className="flex gap-x-2 justify-end items-center h-[50px] ">
-                                            <IconContext.Provider value={{ className: "Icon" }}>
-                                                <IoIosAdd size={20} />
-                                            </IconContext.Provider>
-                                            <IconContext.Provider value={{ className: "Icon" }}>
-                                                <MdDelete size={20} />
-                                            </IconContext.Provider>
-                                            <IconContext.Provider value={{ className: "Icon" }}>
-                                                <IoIosSettings size={20} />
-                                            </IconContext.Provider>
+                                            <AddGoodDialog id={item.id}></AddGoodDialog>
+                                            <DeleteGoodDialog id={item.id}></DeleteGoodDialog>
                                         </TableCell>
                                     </TableRow>
                                 ))}

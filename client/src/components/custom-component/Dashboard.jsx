@@ -69,6 +69,14 @@ export function Dashboard({ screenTitle, children }) {
                             >
                                 MoneyManager
                             </a>
+                            <a
+                                href="/vendors"
+                                className={`flex items-center gap-3 rounded-lg px-3 py-2 transition-all ${isActive('/vendors') ? 'bg-muted text-primary' : 'text-muted-foreground hover:text-primary'
+                                    }`}
+
+                            >
+                                Vendors
+                            </a>
                             <PopoverDemo></PopoverDemo>
                             <a
                                 href="/settings"

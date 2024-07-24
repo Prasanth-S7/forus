@@ -13,7 +13,7 @@ export const Floodhub = (() => {
     },[])
     return (
         <div>
-            <Dashboard screenTitle="Flood Hub">
+            <Dashboard screenTitle="Disaster Navigator">
                 <div className="w-full">
                     <MapComponent locations={locations} />
                 </div>

@@ -14,6 +14,107 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import axios from "axios"
 import { useToast } from "@/components/ui/use-toast"
+async function addGoods(goods) {
+    try {
+      for (let good of goods) {
+        const res = await axios.post('http://localhost:3000/goods/addgood', 
+          {
+            name: good.name,
+            quantity: parseInt(good.quantity),
+            type: good.type
+          }, 
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
+            }
+          }
+        );
+        console.log(`Added: ${res.data}`);
+      }
+    } catch (error) {
+      console.error('Error adding goods:', error);
+    }
+  }
+  const goods = [
+    {
+      "name": "Water Bottles",
+      "quantity": 100,
+      "type": "Essential"
+    },
+    {
+      "name": "Canned Food",
+      "quantity": 200,
+      "type": "Essential"
+    },
+    {
+      "name": "Blankets",
+      "quantity": 50,
+      "type": "Comfort"
+    },
+    {
+      "name": "First Aid Kits",
+      "quantity": 30,
+      "type": "Medical"
+    },
+    {
+      "name": "Flashlights",
+      "quantity": 70,
+      "type": "Tools"
+    },
+    {
+      "name": "Batteries",
+      "quantity": 120,
+      "type": "Tools"
+    },
+    {
+      "name": "Sanitary Napkins",
+      "quantity": 90,
+      "type": "Hygiene"
+    },
+    {
+      "name": "Tents",
+      "quantity": 20,
+      "type": "Shelter"
+    },
+    {
+      "name": "Soap",
+      "quantity": 60,
+      "type": "Hygiene"
+    },
+    {
+      "name": "Tarpaulins",
+      "quantity": 40,
+      "type": "Shelter"
+    },
+    {
+      "name": "Medical Gloves",
+      "quantity": 150,
+      "type": "Medical"
+    },
+    {
+      "name": "Masks",
+      "quantity": 200,
+      "type": "Medical"
+    },
+    {
+      "name": "Portable Stoves",
+      "quantity": 25,
+      "type": "Tools"
+    },
+    {
+      "name": "Sleeping Bags",
+      "quantity": 35,
+      "type": "Comfort"
+    },
+    {
+      "name": "Diapers",
+      "quantity": 60,
+      "type": "Hygiene"
+    }
+  ];
+  
+//   addGoods(goods);
 
 export function SetupGoods({onClickHandler}) {
     const { toast } = useToast();
