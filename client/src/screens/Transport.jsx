@@ -1,7 +1,7 @@
 import { Dashboard } from "@/components/custom-component/Dashboard";
 import { Button } from "@/components/ui/button";
 import { TransportPopUp } from "@/components/custom-component/TransportPopUp";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 import {
@@ -14,75 +14,10 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-const goods = [
-    {
-        SNO: "1",
-        Name: "Camp 1",
-        totalGoods: 100,
-        availableGoods: 50,
-        totalCapacity: 100,
-        availableMembers: 50,
-        status: "Transport"
-    },
-    {
-        SNO: "2",
-        Name: "Camp 1",
-        totalGoods: 100,
-        availableGoods: 150,
-        totalCapacity: 100,
-        availableMembers: 92,
-        status: "Transport"
 
-    },
-    {
-        SNO: "3",
-        Name: "Camp 1",
-        totalGoods: 200,
-        availableGoods: 250,
-        totalCapacity: 100,
-        availableMembers: 86,
-        status: "Onprocess"
-    },
-    {
-        SNO: "4",
-        Name: "Camp 1",
-        totalGoods: 170,
-        availableGoods: 250,
-        totalCapacity: 100,
-        availableMembers: 75,
-        status: "Transport"
-    },
-    {
-        SNO: "5",
-        Name: "Camp 1",
-        totalGoods: 500,
-        availableGoods: 150,
-        totalCapacity: 100,
-        availableMembers: 50,
-        status: "Transport"
-    },
-    {
-        SNO: "6",
-        Name: "Camp 1",
-        totalGoods: 400,
-        availableGoods: 550,
-        totalCapacity: 100,
-        availableMembers: 100,
-        status: "Onprocess"
-    },
-    {
-        SNO: "7",
-        Name: "Camp 1",
-        totalGoods: 300,
-        availableGoods: 250,
-        totalCapacity: 100,
-        availableMembers: 98,
-        status: "Onprocess"
-    },
-
-]
 export function Transport() {
     const navigate = useNavigate()
+    const [campDetails, setCampDetails] = useState([])
     useEffect(() => {
         const checkAuth = async () => {
             const token = localStorage.getItem('token');
@@ -100,10 +35,17 @@ export function Transport() {
         };
         checkAuth();
     }, [navigate]);
+    useEffect(()=>{
+        const fetchCampDetails = (async ()=>{
+            const res = await axios.get("http://localhost:3000/camp/getcampdetails")
+            setCampDetails(res.data)
+        })
+        fetchCampDetails();
+    },[])
     return (
         <div>
             <Dashboard screenTitle="Transport">
-                <div className="px-10 w-full mt-4 overflow-y-auto scrollBar">
+                <div className="px-10 w-full h-[520px] mt-4 overflow-y-auto scrollBar">
                     <Table>
                         {/* <TableCaption>A list of your recent invoices.</TableCaption> */}
                         <TableHeader>
@@ -116,21 +58,23 @@ export function Transport() {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {goods.map((item) => (
-                                <TableRow key={item.SNO}>
-                                    <TableCell className="font-medium">{item.SNO}</TableCell>
-                                    <TableCell>{item.Name}</TableCell>
-                                    <TableCell>{item.availableGoods}/{item.totalGoods}</TableCell>
-                                    <TableCell>{item.availableMembers}/{item.totalCapacity}</TableCell>
+                            {campDetails.map((camp, index) => (
+                                
+                                <TableRow key={camp.id}>
+                                    <TableCell className="font-medium">{index + 1}</TableCell>
+                                    <TableCell>{camp.name}</TableCell>
+                                    <TableCell>{200}/{500}</TableCell>
+                                    <TableCell>{200}/{500}</TableCell>
                                     <TableCell className="text-right">
                                         {/* <Button className = {`${item.status==='Onprocess' ? 'bg-green-600 hover:bg-green-700'  : '' }`}>{item.status}</Button> */}
-                                        {
+                                        {/* {
                                             item.status === 'Transport' ? (
                                                 <TransportPopUp status={item.status}></TransportPopUp>
                                             ) :
                                                 (<Button className="bg-green-600 hover:bg-green-700">{item.status}</Button>)
 
-                                        }
+                                        } */}
+                                        <Button className="bg-green-600 hover:bg-green-700">Transport</Button>
                                     </TableCell>
                                 </TableRow>
                             ))}

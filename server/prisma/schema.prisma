@@ -33,7 +33,7 @@ model Good {
   inventory   Inventory @relation(fields: [inventoryId], references: [id])
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  Camp        Camp?      @relation(fields: [campId], references: [id])
+  Camp        Camp?     @relation(fields: [campId], references: [id])
 }
 
 model User {
@@ -51,6 +51,9 @@ model Camp {
   longitude       String
   totalCapacity   Int
   currentCapacity Int
+  address         String
+  TotalGoods      Int?
+  Status          String?
   createdAt       DateTime @default(now())
   updatedAt       DateTime @default(now())
   Good            Good[]

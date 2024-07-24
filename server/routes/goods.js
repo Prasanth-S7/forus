@@ -1,8 +1,9 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
+import { auth } from '../middlewares/auth.js';
 export const goods = express.Router();
 const prisma = new PrismaClient();
-goods.post('/addgood', async (req, res) => {
+goods.post('/addgood',auth, async (req, res) => {
     const { name, type, quantity } = req.body;
     try {
         const inventoryId = await prisma.inventory.findFirst({
@@ -33,7 +34,7 @@ goods.post('/addgood', async (req, res) => {
     }
 })
 
-goods.get('/getgoods', async (req, res) => {
+goods.get('/getgoods',auth, async (req, res) => {
     try {
         const inventoryId = await prisma.inventory.findFirst({
             where:{
@@ -59,6 +60,7 @@ goods.get('/getgoods', async (req, res) => {
         })
     }
     catch (error) {
+        console.log(error)
         res.status(500).json({
             msg: "Internal Server Error"
         })

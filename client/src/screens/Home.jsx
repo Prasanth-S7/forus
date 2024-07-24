@@ -86,23 +86,23 @@ export function Home() {
                 <div className="flex flex-col w-full">
                     <div className="flex flex-row justify-around w-full ">
                         <div className="h-[200px] mt-3  ">
-                            <Component goodsTitle="Total Goods" className=""></Component>
+                            <Component goodsTitle="Camp Needs" className=""></Component>
                         </div>
                         <div className="h-[200px] mt-3 ">
-                            <Component goodsTitle="Required Goods" className=""></Component>
+                            <Component goodsTitle="Critical Updates" className=""></Component>
                         </div>
                         <div className="h-[200px] mt-3 ">
-                            <Card className="flex items-center justify-evenly h-full">
-                                <CardHeader>
-                                    {/* <CardTitle>Setup Inventory</CardTitle> */}
-                                    <SetupGoods onClickHandler={onClickHandler}></SetupGoods>
-                                    {/* <CardDescription>Card Description</CardDescription> */}
-                                </CardHeader>
-                                <CardContent className="px-4 py-0  flex items-center justify-center">
-                                    <MdInventory size={70} />
-                                </CardContent>
-                            </Card>
-                        </div>
+                                <Card className="flex items-center justify-evenly h-full">
+                                    <CardHeader>
+                                        {/* <CardTitle>Setup Inventory</CardTitle> */}
+                                        <SetupGoods></SetupGoods>
+                                        {/* <CardDescription>Card Description</CardDescription> */}
+                                    </CardHeader>
+                                    <CardContent className="px-4 py-0  flex items-center justify-center">
+                                        <MdInventory size={70} />
+                                    </CardContent>
+                                </Card>
+                            </div>
                         {inventoryAccess && (
                             <div className="h-[200px] mt-3 ">
                                 <Card className="flex items-center justify-evenly h-full">

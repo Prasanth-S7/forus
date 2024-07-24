@@ -1,37 +1,6 @@
-/*
-{
-    "hashtags": [],
-    "mentions": [
-        "@SanjayK53544321",
-        "@MrSinha_"
-    ],
-    "text": "Sanjay Karan @SanjayK53544321 \u00b7 53s Replying to @MrSinha_ Modi means disaster , people of Gujarat have seen and now India is witnessing 1"
-},
-
-
-    "1": {
-    "confidence": [
-        0.014648794196546078,
-        0.9853512048721313
-    ],
-    "hashtags": [],
-    "mentions": [
-        "@SanjayK53544321",
-        "@MrSinha_"
-    ],
-    "prediction": 1,
-    "text": "Sanjay Karan @SanjayK53544321 \u00b7 53s Replying to @MrSinha_ Modi means disaster , people of Gujarat have seen and now India is witnessing 1"
-    },
-
-
-
-
-
-*/
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
     TableHead,
     TableHeader,
@@ -39,10 +8,12 @@ import {
 } from "@/components/ui/table"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
+import axios from "axios"
 import { Input } from "@/components/ui/input"
+import { useState } from "react"
 import { Dashboard } from "@/components/custom-component/Dashboard"
 export const Pdrs = (() => {
-    const predictions = {
+    /*const predictions = {
         "predictions": {
             "1": {
                 "confidence": [
@@ -545,66 +516,105 @@ export const Pdrs = (() => {
                 "text": "Clash Report @clashreport \u00b7 1h Oopsie: Back in 2017, India's first nuclear-powered ballistic missile submarine, INS Arihant, was left inoperative for nearly a year after a hatch was left open, allowing seawater to flood the propulsion compartment. \u2014 The $2.9 billion submarine suffered substantial damage, Show more 3 12 51 9.2K"
             }
         ]
-    }
-
-    const filter = Object.values(predictions)[0]
-    const predictionArray = Object.values(filter)
-    predictionArray.forEach((ele) => {
-        console.log(ele)
+    }*/
+    const [predictions, setPredictions] = useState({})
+    const [runButtonClicked, setRunButtonClicked] = useState(false)
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const [tweetCount, setTweetCount] = useState('')
+    const generateReportHandler = (async (tweet)=>{
+        const res = await axios.post('http://192.168.137.152:8080/api_validation/location_finder_twitter',{
+            "tweet":tweet
+        },{
+            headers:{
+                "Content-Type":"application/json"
+            }
+        });
+        const firstResponse = res.data
+        const getPopulation = await axios.post('http://192.168.137.152:8080/api_validation/get_population', {
+            location_name: firstResponse.locations.location,
+            is_urban: firstResponse.locations.is_urban
+        });
+        console.log(getPopulation.data)
     })
+    const runFunction = (async () => {
+        const res = await axios.post('http://192.168.137.152:8080/api_twitter/scrape_twitter', {
+
+            "username": username,
+            "password": password,
+            "tweet_count": parseInt(tweetCount)
+
+        }, {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        })
+        setPredictions(res.data)
+        console.log(res.data)
+        setRunButtonClicked(!runButtonClicked);
+    })
+
+    let filter, predictionArray;
+    console.log((Object.keys(predictions).length))
+    if (Object.keys(predictions).length !== 0) {
+        filter = Object.values(predictions)[0]
+        predictionArray = Object.values(filter)
+    }
+    // predictionArray.forEach((ele) => {
+    //     console.log(ele)
+    // })
 
     return (
         <div>
             <Dashboard screenTitle="Preventive Disaster Management System">
                 <div className="px-4 w-full">
-                    <div className=" mb-3 py-3 text-xl font-semibold">Account to Use</div>
-                    <div className="lg:flex flex-row justify-evenly items-center lg:space-x-5 ">
+                    <div className="mb-3 py-3 text-xl font-semibold">Account to Use</div>
+                    <div className="lg:flex flex-row justify-evenly items-center lg:space-x-5">
                         <div className="mb-3 flex flex-row justify-center items-center space-x-5">
                             <Label>Username</Label>
-                            <Input></Input>
+                            <Input onChange={(e) => setUsername(e.target.value)}></Input>
                         </div>
                         <div className="mb-3 flex flex-row justify-center items-center space-x-5">
                             <Label>Password</Label>
-                            <Input></Input>
+                            <Input onChange={(e) => setPassword(e.target.value)}></Input>
                         </div>
                         <div className="mb-3 flex flex-row justify-center items-center space-x-5">
                             <Label>Tweet Count</Label>
-                            <Input></Input>
+                            <Input onChange={(e) => setTweetCount(e.target.value)}></Input>
                         </div>
-                        <div className="">
-                            <Button className=" mb-3 px-5 w-full">Run</Button>
+                        <div>
+                            <Button className="mb-3 px-5 w-full" onClick={runFunction}>Run</Button>
                         </div>
                     </div>
-                    <div className="px-3 mt-5 h-[440px] overflow-y-auto scrollBar">
-                        <Table className="">
-                            <TableHeader>
-                                <TableRow>
-                                    <TableHead className="">Tweet</TableHead>
-                                    <TableHead>Prediction</TableHead>
-                                    <TableHead>Hashtag</TableHead>
-                                    <TableHead className="text-right w-[300px]">Actions</TableHead>
-                                </TableRow>
-                            </TableHeader>
-                            <TableBody>
-                                {
-                                    predictionArray.map((item, key) => (
+                    {runButtonClicked ? (
+                        <div className="px-3 mt-5 h-[440px] overflow-y-auto scrollBar">
+                            <Table>
+                                <TableHeader>
+                                    <TableRow>
+                                        <TableHead>Tweet</TableHead>
+                                        <TableHead>Prediction</TableHead>
+                                        <TableHead>Hashtag</TableHead>
+                                        <TableHead className="text-right w-[300px]">Actions</TableHead>
+                                    </TableRow>
+                                </TableHeader>
+                                <TableBody>
+                                    {predictionArray.map((item, key) => (
                                         <TableRow className="h-[150px]" key={key}>
                                             <TableCell className="font-medium">{item.text}</TableCell>
                                             <TableCell>{item.prediction}</TableCell>
                                             <TableCell>Hashtag</TableCell>
                                             <TableCell className="text-right">
-                                                <Button className="mr-3 ">Show more</Button>
-                                                <Button>Generate Report</Button>
+                                                <Button className="mr-3">Show more</Button>
+                                                <Button onClick={()=>generateReportHandler(item.text)}>Generate Report</Button>
                                             </TableCell>
                                         </TableRow>
-                                    ))
-                                }
-
-                            </TableBody>
-                        </Table>
-                    </div>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </div>
+                    ) : null}
                 </div>
             </Dashboard>
         </div>
-    )
+    );
 })
