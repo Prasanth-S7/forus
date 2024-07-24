@@ -1,28 +1,75 @@
+# FORUS - FOCUSED OPERATIONAL RESCUERS UNIFIED SYSTEM
+
+FORUS is a comprehensive Disaster Management and Control project designed to:
+
+- **Minimize Wait Times**: Reduce delays in taking action during disaster situations.
+- **Identify Potential Disaster Areas**: Predict and pinpoint regions where disasters might occur.
+- **Provide Detailed Reports**: Generate thorough reports for each disaster event.
+- **Analyze Social Media**: Utilize social media tweets to identify and verify disaster occurrences.
+
+This system integrates real-time data analysis and verification to enhance disaster response and management efforts.
 
 ## Requirements
-node version >= 20.10.0
-## Steps to setUp the project locally
-```git clone https://github.com/Prasanth-S7/forus```
 
-Navigate to the client directory by ```cd client ```
+- **Node Version**: >= 20.10.0
 
-``` npm install ```  to install all the dependencies
+## Steps to Set Up the Project Locally
 
-Navigate to the server directory by ``` cd ../server ```
+1. **Clone the Repository**:
+    ```bash
+    git clone https://github.com/Prasanth-S7/forus
+    ```
 
-Run ``` npm install ``` again to install all the dependencies
+2. **Navigate to the Client Directory and Install Dependencies**:
+    ```bash
+    cd client
+    npm install
+    ```
 
-## Steps to setUp the database
+3. **Navigate to the Server Directory and Install Dependencies**:
+    ```bash
+    cd ../server
+    npm install
+    ```
 
-Buy a free PostgreSQL instance from https://neon.tech or using docker by ``` docker pull postgres ```
+## Steps to Set Up the Database
 
-Navigate to the server directory and run ``` npx prisma migrate dev ``` to migrate your database then ``` npx prisma generate ``` to generate prisma client
+1. **Acquire a PostgreSQL Instance**:
+   - You can get a free instance from [Neon](https://neon.tech) or use Docker:
+     ```bash
+     docker pull postgres
+     ```
 
-Navigate to the server and run ``` cp .env.example .env ``` and populate all the required variables
+2. **Migrate the Database**:
+    ```bash
+    cd server
+    npx prisma migrate dev
+    npx prisma generate
+    ```
 
-This project uses mailHog to create a fake SMTP server. Install it via using docker by ``` docker run -d -p 1025:1025 -p 8025:8025 mailhog/mailhog ```
+3. **Set Up Environment Variables**:
+    ```bash
+    cp .env.example .env
+    # Populate all the required variables in the .env file
+    ```
 
-You will be able to see the mail dashboard in http://localhost:8025
+4. **Set Up MailHog for Fake SMTP Server**:
+    - Install via Docker:
+      ```bash
+      docker run -d -p 1025:1025 -p 8025:8025 mailhog/mailhog
+      ```
+    - You will be able to see the mail dashboard at [http://localhost:8025](http://localhost:8025)
 
-Run ``` npm run dev ``` in the client and server directory to run local server 
+## Running the Project
 
+1. **Run the Client**:
+    ```bash
+    cd client
+    npm run dev
+    ```
+
+2. **Run the Server**:
+    ```bash
+    cd ../server
+    npm run dev
+    ```
